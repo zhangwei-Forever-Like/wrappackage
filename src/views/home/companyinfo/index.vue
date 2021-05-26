@@ -1,0 +1,37 @@
+<template>
+  <el-table
+    :data="tableData"
+    border
+    style="width: 100%" class="biao">
+    <el-table-column
+      prop="date"
+      label="序号"
+      width="100">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="账号"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="邮箱"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="联系电话"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="单位名称"
+      >
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="审核状态"
+      width="180">
+    </el-table-column>
+  </el-table>
+</template>

@@ -1,0 +1,36 @@
+<template>
+  <el-table
+    :data="tableData"
+    border
+    style="width: 100%">
+    <el-table-column
+      prop="date"
+      label="序号"
+      width="100">
+    </el-table-column>
+    <el-table-column
+      prop="name"
+      label="项目名称"
+      width="250">
+    </el-table-column>
+    <el-table-column
+      prop="address"
+      label="企业名称">
+    </el-table-column>
+    <el-table-column
+      prop="date"
+      label="工作室名称"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="date"
+      label="招标人数"
+      width="180">
+    </el-table-column>
+    <el-table-column
+      prop="date"
+      label="招标进度"
+      width="180">
+    </el-table-column>
+  </el-table>
+</template>
