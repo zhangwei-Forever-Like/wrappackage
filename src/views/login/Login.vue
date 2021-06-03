@@ -60,20 +60,32 @@
       </el-form>
     </div>
     <div>
-
       <!--管理员注册表单-->
-      <el-dialog title="注册"
-        :visible.sync="adminDialog" @close="closeDialog" :append-to-body="true" :close-on-click-modal="false"
+      <el-dialog
+        title="注册"
+        :visible.sync="adminDialog"
+        @close="closeDialog"
+        :append-to-body="true"
+        :close-on-click-modal="false"
       >
-        <el-form :model="adminRegisterInfo" ref="registerFormRef"  status-icon >
+        <el-form :model="adminRegisterInfo" ref="registerFormRef" status-icon>
           <el-form-item label="用户名" prop="username">
-            <el-input type="text" v-model="adminRegisterInfo.username"></el-input>
+            <el-input
+              type="text"
+              v-model="adminRegisterInfo.username"
+            ></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input show-password v-model="adminRegisterInfo.password"></el-input>
+            <el-input
+              show-password
+              v-model="adminRegisterInfo.password"
+            ></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="rePassword">
-            <el-input type="password" v-model="adminRegisterInfo.rePassword"></el-input>
+            <el-input
+              type="password"
+              v-model="adminRegisterInfo.rePassword"
+            ></el-input>
           </el-form-item>
         </el-form>
         <div class="register-button" slot="footer">
@@ -82,21 +94,45 @@
         </div>
       </el-dialog>
 
-        <!--企业注册表单-->
-      <el-dialog title="注册" :close-on-click-modal="false" :visible.sync="entrDialog"
-                 @close="closeDialog" :append-to-body="true">
-        <el-form :model="entrRegisterInfo" ref="registerFormRef"  status-icon size="mini">
+      <!--企业注册表单-->
+      <el-dialog
+        title="注册"
+        :close-on-click-modal="false"
+        :visible.sync="entrDialog"
+        @close="closeDialog"
+        :append-to-body="true"
+      >
+        <el-form
+          :model="entrRegisterInfo"
+          ref="registerFormRef"
+          status-icon
+          size="mini"
+          :rules="entrRegisterRule"
+        >
           <el-form-item label="用户名" prop="username">
-            <el-input type="text" v-model="entrRegisterInfo.username"></el-input>
+            <el-input
+              type="text"
+              v-model="entrRegisterInfo.username"
+            ></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input show-password type="password" v-model="entrRegisterInfo.password"></el-input>
+            <el-input
+              show-password
+              type="password"
+              v-model="entrRegisterInfo.password"
+            ></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="rePassword">
-            <el-input type="password" v-model="entrRegisterInfo.rePassword"></el-input>
+            <el-input
+              type="password"
+              v-model="entrRegisterInfo.rePassword"
+            ></el-input>
           </el-form-item>
           <el-form-item label="企业名称" prop="unitName">
-            <el-input type="text" v-model="entrRegisterInfo.unitName"></el-input>
+            <el-input
+              type="text"
+              v-model="entrRegisterInfo.unitName"
+            ></el-input>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
             <el-input type="text" v-model="entrRegisterInfo.email"></el-input>
@@ -105,34 +141,64 @@
             <el-input type="number" v-model="entrRegisterInfo.phone"></el-input>
           </el-form-item>
           <el-form-item label="角色" prop="role" v-show="isShow">
-            <el-input type="text" v-model="entrRegisterInfo.role=1"></el-input>
+            <el-input
+              type="text"
+              :v-model="(entrRegisterInfo.role = 1)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="描述" prop="description">
-            <el-input type="text" v-model="entrRegisterInfo.description"></el-input>
+            <el-input
+              type="text"
+              v-model="entrRegisterInfo.description"
+            ></el-input>
           </el-form-item>
           <el-form-item label="头像" prop="image" v-show="isShow">
-            <el-input type="text" v-model="entrRegisterInfo.image=0"></el-input>
+            <el-input
+              type="text"
+              :v-model="(entrRegisterInfo.image = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="审核状态" prop="auditStatus" v-show="isShow">
-            <el-input type="number" v-model="entrRegisterInfo.auditStatus=0"></el-input>
+            <el-input
+              type="number"
+              :v-model="(entrRegisterInfo.auditStatus = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="成立时间" prop="establishedTime">
-            <el-input type="text" v-model="entrRegisterInfo.establishedTime"></el-input>
+            <el-input
+              type="text"
+              v-model="entrRegisterInfo.establishedTime"
+            ></el-input>
           </el-form-item>
           <el-form-item label="余额" prop="balance" v-show="isShow">
-            <el-input type="number" v-model="entrRegisterInfo.balance=0"></el-input>
+            <el-input
+              type="number"
+              :v-model="(entrRegisterInfo.balance = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="逻辑删除" prop="deleted" v-show="isShow">
-            <el-input type="number" v-model="entrRegisterInfo.deleted=0"></el-input>
+            <el-input
+              type="number"
+              :v-model="(entrRegisterInfo.deleted = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="乐观锁" prop="version" v-show="isShow">
-            <el-input type="number" v-model="entrRegisterInfo.version=1"></el-input>
+            <el-input
+              type="number"
+              :v-model="(entrRegisterInfo.version = 1)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="创建时间" prop="createTime" v-show="isShow">
-            <el-input type="text" v-model="entrRegisterInfo.createTime='2019-01-03 10:59:27'"></el-input>
+            <el-input
+              type="text"
+              :v-model="(entrRegisterInfo.createTime = '2019-01-03 10:59:27')"
+            ></el-input>
           </el-form-item>
           <el-form-item label="修改时间" prop="updateTime" v-show="isShow">
-            <el-input type="text" v-model="entrRegisterInfo.updateTime='2019-01-03 10:59:27'"></el-input>
+            <el-input
+              type="text"
+              :v-model="(entrRegisterInfo.updateTime = '2019-01-03 10:59:27')"
+            ></el-input>
           </el-form-item>
         </el-form>
         <div class="register-button" slot="footer">
@@ -141,21 +207,45 @@
         </div>
       </el-dialog>
 
-        <!--工作室注册表单-->
-       <el-dialog title="注册" :close-on-click-modal="false" :visible.sync="userDialog"
-                 @close="closeDialog" :append-to-body="true">
-        <el-form status-icon ref="registerFormRef" :model="userRegisterInfo" size="mini">
+      <!--工作室注册表单-->
+      <el-dialog
+        title="注册"
+        :close-on-click-modal="false"
+        :visible.sync="userDialog"
+        @close="closeDialog"
+        :append-to-body="true"
+      >
+        <el-form
+          status-icon
+          ref="registerFormRef"
+          :model="userRegisterInfo"
+          size="mini"
+          :rules="userRegisrerRule"
+        >
           <el-form-item label="用户名" prop="username">
-            <el-input type="text" v-model="userRegisterInfo.username"></el-input>
+            <el-input
+              type="text"
+              v-model="userRegisterInfo.username"
+            ></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input show-password type="password" v-model="userRegisterInfo.password"></el-input>
+            <el-input
+              show-password
+              type="password"
+              v-model="userRegisterInfo.password"
+            ></el-input>
           </el-form-item>
           <el-form-item label="确认密码" prop="rePassword">
-            <el-input type="password" v-model="userRegisterInfo.rePassword"></el-input>
+            <el-input
+              type="password"
+              v-model="userRegisterInfo.rePassword"
+            ></el-input>
           </el-form-item>
           <el-form-item label="工作室名称" prop="unitName">
-            <el-input type="text" v-model="userRegisterInfo.unitName"></el-input>
+            <el-input
+              type="text"
+              v-model="userRegisterInfo.unitName"
+            ></el-input>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
             <el-input type="text" v-model="userRegisterInfo.email"></el-input>
@@ -164,49 +254,106 @@
             <el-input type="number" v-model="userRegisterInfo.phone"></el-input>
           </el-form-item>
           <el-form-item label="角色" prop="role" v-show="isShow">
-            <el-input type="text" v-model="userRegisterInfo.role=2"></el-input>
+            <el-input
+              type="text"
+              :v-model="(userRegisterInfo.role = 2)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="描述" prop="description">
-            <el-input type="text" v-model="userRegisterInfo.description"></el-input>
+            <el-input
+              type="text"
+              v-model="userRegisterInfo.description"
+            ></el-input>
           </el-form-item>
           <el-form-item label="头像" prop="image" v-show="isShow">
-            <el-input type="text" v-model="userRegisterInfo.image=0"></el-input>
+            <el-input
+              type="text"
+              :v-model="(userRegisterInfo.image = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="审核状态" prop="auditStatus" v-show="isShow">
-            <el-input type="number" v-model="userRegisterInfo.auditStatus=0"></el-input>
+            <el-input
+              type="number"
+              :v-model="(userRegisterInfo.auditStatus = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="成立时间" prop="establishedTime">
-            <el-input type="text" v-model="userRegisterInfo.establishedTime"></el-input>
+            <el-input
+              type="text"
+              v-model="userRegisterInfo.establishedTime"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="需求指标评分" prop="evaluateDemand" v-show="isShow">
-            <el-input type="number" v-model="userRegisterInfo.evaluateDemand=0"></el-input>
+          <el-form-item
+            label="需求指标评分"
+            prop="evaluateDemand"
+            v-show="isShow"
+          >
+            <el-input
+              type="number"
+              :v-model="(userRegisterInfo.evaluateDemand = 0)"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="能力指标评分" prop="evaluateAbility" v-show="isShow">
-            <el-input type="number" v-model="userRegisterInfo.evaluateAbility=0"></el-input>
+          <el-form-item
+            label="能力指标评分"
+            prop="evaluateAbility"
+            v-show="isShow"
+          >
+            <el-input
+              type="number"
+              :v-model="(userRegisterInfo.evaluateAbility = 0)"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="计划指标评分" prop="evaluatePlan" v-show="isShow">
-            <el-input type="number" v-model="userRegisterInfo.evaluatePlan=0"></el-input>
+          <el-form-item
+            label="计划指标评分"
+            prop="evaluatePlan"
+            v-show="isShow"
+          >
+            <el-input
+              type="number"
+              :v-model="(userRegisterInfo.evaluatePlan = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="擅长类型" prop="typeId">
-            <el-input type="number" v-model="userRegisterInfo.typeId"></el-input>
+            <el-input
+              type="number"
+              v-model="userRegisterInfo.typeId"
+            ></el-input>
           </el-form-item>
           <el-form-item label="服务总数" prop="nums" v-show="isShow">
-            <el-input type="number" v-model="userRegisterInfo.nums=0"></el-input>
+            <el-input
+              type="number"
+              :v-model="(userRegisterInfo.nums = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="余额" prop="balance" v-show="isShow">
-            <el-input type="number" v-model="userRegisterInfo.balance=0"></el-input>
+            <el-input
+              type="number"
+              :v-model="(userRegisterInfo.balance = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="逻辑删除" prop="deleted" v-show="isShow">
-            <el-input type="number" v-model="userRegisterInfo.deleted=0"></el-input>
+            <el-input
+              type="number"
+              :v-model="(userRegisterInfo.deleted = 0)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="乐观锁" prop="version" v-show="isShow">
-            <el-input type="number" v-model="userRegisterInfo.version=1"></el-input>
+            <el-input
+              type="number"
+              :v-model="(userRegisterInfo.version = 1)"
+            ></el-input>
           </el-form-item>
           <el-form-item label="创建时间" prop="createTime" v-show="isShow">
-            <el-input type="text" v-model="userRegisterInfo.createTime='2019-01-03 10:59:27'"></el-input>
+            <el-input
+              type="text"
+              :v-model="(userRegisterInfo.createTime = '2019-01-03 10:59:27')"
+            ></el-input>
           </el-form-item>
           <el-form-item label="修改时间" prop="updateTime" v-show="isShow">
-            <el-input type="text" v-model="userRegisterInfo.updateTime='2019-01-03 10:59:27'"></el-input>
+            <el-input
+              type="text"
+              :v-model="(userRegisterInfo.updateTime = '2019-01-03 10:59:27')"
+            ></el-input>
           </el-form-item>
         </el-form>
         <div class="register-button" slot="footer">
@@ -219,30 +366,47 @@
 </template>
 
 <script>
+import {mapMutations} from "vuex";
 import Qs from "qs";
 export default {
   data() {
+    var checkEmail = (rule, value, cb) => {
+      const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
+
+      if (regEmail.test(value)) {
+        return cb();
+      }
+      cb(new Error("请输入合法的邮箱"));
+    };
+    var checkMobile = (rule, value, cb) => {
+      const regMobile = /^(0|86|17951)?(13[0-9]|15[0123456789]|17[678]|18[0-9]|14[57])[0-9]{8}$/;
+
+      if (regMobile.test(value)) {
+        return cb();
+      }
+      cb(new Error("请输入合法的手机号"));
+    };
     return {
-     // 这是登录表单的数据绑定对象
+      // 这是登录表单的数据绑定对象
       loginForm: {
-        username: "",
-        password: "",
+        username: "wac",
+        password: "242866",
         pwdType: "password",
       },
-       isShow:false,
-       //管理员注册对话框
-        adminDialog:false,
-        //用户注册对话框
-        userDialog:false,
-        //企业注册对话框
-        entrDialog:false,
-        //管理员注册信息对象
-        adminRegisterInfo:{},
-        //用户注册信息对象
-        userRegisterInfo:{},
-        //企业注册信息对象
-        entrRegisterInfo:{},
-       loginFormRules: {
+      isShow: false,
+      //管理员注册对话框
+      adminDialog: false,
+      //用户注册对话框
+      userDialog: false,
+      //企业注册对话框
+      entrDialog: false,
+      //管理员注册信息对象
+      adminRegisterInfo: {},
+      //用户注册信息对象
+      userRegisterInfo: {},
+      //企业注册信息对象
+      entrRegisterInfo: {},
+      loginFormRules: {
         username: [
           { required: true, message: "请输入登录账号", trigger: "blur" },
           {
@@ -255,27 +419,151 @@ export default {
         password: [
           { required: true, message: "请输入登陆密码", trigger: "blur" },
           {
-            min: 3,
+            min: 6,
             max: 15,
             message: "长度在 5 到 15 个字符",
             trigger: "blur",
           },
         ],
       },
+      entrRegisterRule: {
+        username: [
+          { required: true, message: "请输入您的用户名", trigger: "blur" },
+          {
+            min: 3,
+            max: 10,
+            message: "长度在 3 到 10 个字符",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          {
+            min: 5,
+            max: 15,
+            message: "长度在 5 到 15 个字符",
+            trigger: "blur",
+          },
+        ],
+        rePassword: [
+          { required: true, message: "请再次输入密码", trigger: "blur" },
+          {
+            min: 5,
+            max: 15,
+            message: "长度在 5 到 15 个字符",
+            trigger: "blur",
+          },
+        ],
+        unitName: [
+          { required: true, message: "请输入企业名称", trigger: "blur" },
+          {
+            min: 6,
+            max: 15,
+            message: "长度在 5 到 15 个字符",
+            trigger: "blur",
+          },
+        ],
+        email: [
+          { required: true, message: "请输入合法的邮箱", trigger: "blur" },
+          {
+            validator: checkEmail,
+            trigger: "blur",
+          },
+        ],
+        phone: [
+          { required: true, message: "请输入合法的手机号", trigger: "blur" },
+          { validator: checkMobile, trigger: "blur" },
+        ],
+        description: [
+          { required: true, message: "请输入您的描绘内容", trigger: "blur" },
+          {
+            min: 10,
+            max: 20,
+            message: "长度在 10 到 20 个字符",
+            trigger: "blur",
+          },
+        ],
+      },
+      userRegisrerRule: {
+        username: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          {
+            min: 3,
+            max: 10,
+            message: "长度在 3 到 10 个字符",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          { required: true, message: "请输入密码", trigger: "blur" },
+          {
+            min: 6,
+            max: 15,
+            message: "长度在 6 到 15 个字符",
+            trigger: "blur",
+          },
+        ],
+        rePassword: [
+          { required: true, message: "请再次输入密码", trigger: "blur" },
+          {
+            min: 6,
+            max: 15,
+            message: "长度在 6 到 15 个字符",
+            trigger: "blur",
+          },
+        ],
+        unitName: [
+          { required: true, message: "请输入工作室名称", trigger: "blur" },
+          {
+            min: 5,
+            max: 10,
+            message: "长度在 5 到 10 个字符",
+            trigger: "blur",
+          },
+        ],
+        email: [
+          { required: true, message: "请输入合法的邮箱", trigger: "blur" },
+          {
+            validator: checkEmail,
+            trigger: "blur",
+          },
+        ],
+        phone: [
+          { required: true, message: "请输入合法的手机号", trigger: "blur" },
+          {
+            validator: checkMobile,
+            trigger: "blur",
+          },
+        ],
+        description: [
+          { required: true, message: "请输入您所描绘的内容", trigger: "blur" },
+          {
+            min: 6,
+            max: 10,
+            message: "长度在 6 到 10 个字符",
+            trigger: "blur",
+          },
+        ],
+        typeId: [
+            { required: true, message: '请输入您擅长的内容', trigger: 'blur' },
+          {
+            min: 6,
+            max: 10,
+            message: '长度在 6 到 10 个字符',
+            trigger: 'blur',
+          },
+        ]
+      },
       radio: "1",
     };
   },
   methods: {
+    ...mapMutations(['changeLogin']),
     login() {
+      let _this=this;
       this.$refs.loginFormRef.validate((valid) => {
         if (!valid) return;
-        if (this.radio === "0") {
           var url = "/api/login/admin";
-        } else if (this.radio === "1") {
-          url = "/api/login/company";
-        } else if (this.radio === "2") {
-          url = "/api/login/studio";
-        }
         console.log(valid);
         console.log(this.radio);
         this.$axios
@@ -290,15 +578,37 @@ export default {
               },
             })
           )
-          .then((res) => {
-            if (res.status == 200) {
+          .then((response) => {
+            console.log(response);
+            this.code =response.data.code;
+            this.userToken =response.data.token;
+            console.log("开始输出")
+            console.log(_this.userToken)//获取到的token
+            this.changeLogin({Authorization: this.userToken});
+            
+            // // 将用户token保存到vuex中
+            // _this.changeLogin({Authorization: _this.userToken});
+            // _this.state.username=response.data.data
+            // _this.state.status=true;
+            // console.log(_this.$store.state.status)
+            if (_this.code === 200) {
               if (this.radio === "0") {
                 this.$message.success("登录成功");
+                 window.sessionStorage.setItem("token",response.data.token)
                 this.$router.push("/home");
               } else if (this.radio === "1") {
                 this.$message.success("登录成功");
+                 window.sessionStorage.setItem("token",response.data.token)
                 this.$router.push("/index");
+            }else if(this.radio==="2"){
+              this.$message.success("登录成功");
+                window.sessionStorage.setItem("token",response.data.token)
+                this.$router.push("/personalcenter")
+            }
               }
+            else {
+              this.$message.success("密码或用户名错误");
+              return this.$message.error("密码或用户名错误");
             }
           })
           .catch((err) => {
@@ -308,56 +618,65 @@ export default {
     },
     reset() {
       this.$refs.loginFormRef.resetFields();
-       this.dialogFormVisible = false;
+      this.dialogFormVisible = false;
     },
     openDialog() {
-      let open=this.radio
-      if(open==='0'){
-        this.adminDialog=true;
-      }else if(open==='1'){
-         this.entrDialog=true;
-      }else if(open==='2'){
-        this.userDialog=true;
-      }else{
-        this.$message.error("出现未知错误")
+      let open = this.radio;
+      if (open === "0") {
+        this.adminDialog = true;
+      } else if (open === "1") {
+        this.entrDialog = true;
+      } else if (open === "2") {
+        this.userDialog = true;
+      } else {
+        this.$message.error("出现未知错误");
       }
     },
-    closeDialog(){
+    closeDialog() {
       this.$refs.registerFormRef.resetFields();
     },
-    cancel(){
+    cancel() {
       this.$refs.registerFormRef.resetFields();
-      this.adminDialog=false;
-      this.entrDialog=false;
-      this.userDialog=false;
+      this.adminDialog = false;
+      this.entrDialog = false;
+      this.userDialog = false;
     },
-    register(){
-      this.$refs.registerFormRef.validate(async valid=>{
-        if(!valid)return this.$message.error("参数错误")
-        let _res;
-        let _this=this;
-        console.log(this.radio)
+    register() {
+      this.$refs.registerFormRef.validate(async (valid) => {
         console.log(valid)
-        if(this.radio==='0'){
-          const {data: res}=await  _this.$axios.post("/api/admin/register/",Qs.stringify(_this.adminRegisterInfo))
-          _res=res;
-        }else if(this.radio==='1'){
-          const  {data:res}=await _this.$axios.post("/api/company/register",Qs.stringify(_this.entrRegisterInfo))
-          _res=res
-        }else if(this.radio==='2'){
-          const {data: res}=await _this.$axios.post("/api/studio/register/",Qs.stringify(_this.userRegisterInfo))
-          _res=res;
+        if (!valid) return this.$message.error("参数错误");
+        let _res;
+        let _this = this;
+        console.log(valid)
+        if (this.radio === "0") {
+          const { data: res } = await _this.$axios.post(
+            "/api/admin/register/",
+            Qs.stringify(_this.adminRegisterInfo)
+          );
+          _res = res;
+        } else if (this.radio === "1") {
+          const { data: res } = await _this.$axios.post(
+            "/api/company/register",
+            Qs.stringify(_this.entrRegisterInfo)
+          );
+          _res = res;
+        } else if (this.radio === "2") {
+          const { data: res } = await _this.$axios.post(
+            "/api/studio/register",
+            Qs.stringify(_this.userRegisterInfo)
+          );
+          _res = res;
+          console.log(_res)
         }
-        console.log(_res)
-        if(_res.code!==200){
-          return _this.$message.error("注册失败")
+        if (_res.code !== 200) {
+          return _this.$message.error("注册失败");
         }
-        this.adminDialog=false;
-        this.userDialog=false;
-        this.entrDialog=false;
-        return _this.$message.success("注册成功，请重新登录")
-      })
-    }
+        this.adminDialog = false;
+        this.userDialog = false;
+        this.entrDialog = false;
+        return _this.$message.success("注册成功，请重新登录");
+      });
+    },
   },
 };
 </script>

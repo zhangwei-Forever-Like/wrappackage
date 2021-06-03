@@ -29,12 +29,11 @@ export default {
 </script>
 
 <style>
-.ad{
-  /* width: 180px; */
+/* .ad{
   height: 753px;
-  background-color:#545c64;
-}
-.el-header, .el-footer {
+  background-color:#585464;
+} */
+/* .el-header, .el-footer {
     background-color: #B3C0D1;
     color: #333;
     text-align: center;
@@ -52,7 +51,8 @@ export default {
     color: #333;
     text-align: center;
     line-height: 160px;
-  };
+  }; */
+
   body > .el-container {
     margin-bottom: 40px;
   };
@@ -63,6 +63,27 @@ export default {
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   };
+
+    el-header {
+    background-color: #cf530c;
+    color: #333;
+    line-height: 60px;
+    height: 100%;
+  }
+
+  .el-aside {
+    background-color: rgb(84, 92, 100);
+    color: #333;
+    height: 100vh;
+    flex-shrink: 1;
+    margin-left: 0;
+  }
+
+  .el-main {
+    background-color: #d5dfeb;
+    color: #333;
+    
+  }
    .el-dropdown-link {
     cursor: pointer;
     color: #409EFF;

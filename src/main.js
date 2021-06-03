@@ -5,6 +5,9 @@ import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI, { Message } from 'element-ui'
 import VueParticles from 'vue-particles'
 import axios from './axios'
+import store from './store'
+import qs from 'qs'
+
 
 Vue.use(VueParticles)
 
@@ -13,22 +16,19 @@ Vue.config.productionTip = false
 Vue.prototype.$axios=axios
 Vue.prototype.$message=Message
 
+
 router.beforeEach((to, from, next) => {
   if (to.path === '/' || to.path === '/login') {
-    next();
-  } else {
-    let token = localStorage.getItem('Authorization');
-    console.log("我是浏览器本地缓存的token:"+token);
-    if (token === null || token === '') {
-      next({path:"/"});
-      alert("尚未登录!!");
-    } else {
-      next();
-    }
-  }
+   return next();
+  } 
+  let token = localStorage.getItem('Authorization');
+  const tokenStr=window.sessionStorage.getItem('token')
+  if(!tokenStr) return next('/login')
+  next()
 })
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

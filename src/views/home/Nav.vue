@@ -2,7 +2,7 @@
     <el-container class="home-container">
             <!-- 左侧导航栏 -->
     <el-aside class="ad" :width="isCollapse ? '64px' : '180px' ">
-      <div class="toggle-button" @click="toggleCollapse">|||</div>
+      <!-- <div class="toggle-button" @click="toggleCollapse">|||</div> -->
       <el-menu
       default-active="1"
       class="el-menu-vertical-demo"
@@ -64,21 +64,21 @@ methods:{
   toggleCollapse(){
     this.isCollapse = !this.isCollapse;	//点击折叠按钮后，对isCollapse进行取反
   }
+ 
 }
 }
 </script>
 
 <style>
 .el-menu{
-  border-right: none;
+  border:none;
 }
-.toggle-button{
+ /* .toggle-button{
   background-color: #545c64;
   font-size: 25px;
   line-height: 55px;
   color: white;
   text-align: center;
   cursor: pointer;
-  /* width: 180px; */
-}
+}  */
 </style>
