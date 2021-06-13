@@ -1,21 +1,28 @@
 <template>
   <div>
     <manage-nav></manage-nav>
-    <el-table :data="tableData" border style="width: 100%">
-      <el-table-column prop="id" label="序号" width="180"> </el-table-column>
-      <el-table-column prop="name" label="项目标签" width="180">
+    <el-table :data="allList" border style="width: 100%">
+      <el-table-column type="index" label="序号" width="180"> </el-table-column>
+      <el-table-column prop="project_title" label="项目标题" width="180">
       </el-table-column>
       <el-table-column label="项目详情" width="180">
         <el-button @click="getProgress">查看</el-button>
       </el-table-column>
-      <el-table-column label="招募进度" width="180"> 招募中 </el-table-column>
+      <el-table-column label="招募进度" width="180" prop="status">
+        <template slot-scope="scope">
+          <span v-if="scope.row.status == 0">招募结束</span>
+          <span v-else-if="scope.row.status == 1">招募中</span>
+        </template>
+      </el-table-column>
       <el-table-column prop="name" label="工作室信息" width="180">
         <el-button @click="getStudiot">工作室</el-button>
       </el-table-column>
       <el-table-column label="定金" width="180">
         <el-button @click="getpayment">付款</el-button>
       </el-table-column>
-      <el-table-column label="招标人数" width="180"> </el-table-column>
+      <el-table-column label="招标人数" width="180">
+        <template></template>
+      </el-table-column>
       <el-table-column label="管理" width="180">
         <el-button
           type="danger"
@@ -54,38 +61,19 @@ export default {
   components: { ManageNav },
   data() {
     return {
-      tableData: [
-        {
-          id: "1",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄",
-        },
-        {
-          id: "2",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄",
-        },
-        {
-          id: "3",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄",
-        },
-        {
-          id: "4",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄",
-        },
-      ],
       currentPage1: 5,
       currentPage2: 5,
       currentPage3: 5,
       currentPage4: 4,
       dialogVisible: false,
       userId: 1001,
+      allList: [],
     };
   },
   created() {
     this.getList();
+    // this.getPayment();
+    this.updateList();
   },
   methods: {
     handleSizeChange(val) {
@@ -107,16 +95,23 @@ export default {
     getpayment() {
       this.dialogVisible = true;
     },
-    getList() {
-      this.$axios
-        .get(
-          "/api/company/select_ByuUerId/1/2",
-          {params:{userId:this.userId}}
-        )
-        .then((res) => {
-          console.log(res);
-        });
+    async getList() {
+      const { data: res } = await this.$axios.get(
+        "/api/company/select_ByuUerId/1/4",
+        {
+          params: { userId: this.userId },
+        }
+      );
+      this.allList = res.data;
+      console.log(res);
     },
+    // async getpayment(){
+    //   const {data:res}=await this.$axios.get("/api/company")
+    // }
+    async updateList(){
+      const {data:res}=await this.$axios.get("/api/company/tender_sort/1/2",{params:{id:19011}})
+      console.log(res)
+    }
   },
 };
 </script>

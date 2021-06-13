@@ -1,29 +1,29 @@
 <template>
-<el-table
+  <el-table
     :data="tableData"
     border
     style="width: 100%">
     <el-table-column
-      prop="date"
+      type="index"
       label="序号"
       width="100">
     </el-table-column>
     <el-table-column
-      prop="name"
+      prop="project_title"
       label="项目名称"
       width="250">
     </el-table-column>
     <el-table-column
-      prop="address"
+      prop="company_name"
       label="企业名称">
     </el-table-column>
     <el-table-column
-      prop="date"
+      prop="studio_name"
       label="工作室名称"
       width="180">
     </el-table-column>
     <el-table-column
-      prop="date"
+      prop="payment_deposit"
       label="定金"
       width="120">
     </el-table-column>
@@ -44,3 +44,27 @@
     </el-table-column>
   </el-table>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      tableData: [],
+    };
+  },
+  created() {
+    this.getList();
+  },
+  methods: {
+    async getList() {
+      const { data: res } = await this.$axios.get("/api/admin/payment_status/1/8");
+      console.log(res);
+      this.tableData = res.data;
+    },
+  },
+};
+</script>
+
+<style>
+
+</style>

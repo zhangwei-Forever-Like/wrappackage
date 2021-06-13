@@ -1,15 +1,11 @@
 <template> 
-<!-- <el-breadcrumb separator="/">
-  <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-  <el-breadcrumb-item v-show="showBread">{{$route.meta.title}}</el-breadcrumb-item>
-  <el-breadcrumb-item v-show="showBread">{{$route.meta.title}}</el-breadcrumb-item> -->
 <div class="navbar clearfix">
     <el-breadcrumb class="breadcrumb-container" separator-class="el-icon-arrow-right">
       <el-breadcrumb-item > <span @click="back">返回</span> </el-breadcrumb-item>
       <el-breadcrumb-item v-for="item in levelList" :key="item.path" :to="item.path">{{item.meta.title}}</el-breadcrumb-item>
   <!-- 面包屑左侧显示页面标题 -->
   <!-- 面包屑右侧下拉功能块 -->
-    <el-dropdown @command="handleCommand" class="select">
+    <el-dropdown class="select">
       <span class="el-dropdown-link">
       <img src="" alt=""><i class="el-icon-arrow-down el-icon--right"></i>
       </span>
@@ -25,7 +21,7 @@
  
 <script>
   export default {
-    name: 'Navbar',
+    name: 'Breadcrumb',
     data() {
       return {
         levelList: []
@@ -60,7 +56,24 @@
   text-align: center;
   cursor: pointer;
 }
-
+  .breadcrumb-container{
+   /* padding-left:80px ; */
+    /* display: inline-block; */
+    margin-left: 80px;
+    margin-top: 23px;
+  }
+  .el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+    height: 100%; 
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+    
+  }
+  .select{
+    float: right;
+  }
 </style>
 
 

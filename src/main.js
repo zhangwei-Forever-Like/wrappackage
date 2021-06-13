@@ -6,7 +6,6 @@ import ElementUI, { Message } from 'element-ui'
 import VueParticles from 'vue-particles'
 import axios from './axios'
 import store from './store'
-import qs from 'qs'
 
 
 Vue.use(VueParticles)

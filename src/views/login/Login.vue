@@ -583,7 +583,7 @@ export default {
             this.code =response.data.code;
             this.userToken =response.data.token;
             console.log("开始输出")
-            console.log(_this.userToken)//获取到的token
+            // console.log(_this.userToken)//获取到的token
             this.changeLogin({Authorization: this.userToken});
             
             // // 将用户token保存到vuex中

@@ -22,7 +22,7 @@
           <div class="pro-type">
             <span
               :class="indexEmployee == inxEmployee ? 'serEmployee' : ''"
-              @click="serverEmployeem( indexEmployee)"
+              @click="serverEmployeem(indexEmployee)"
               v-for="(item, indexEmployee) in serverEmployee"
               :key="indexEmployee"
               >{{ item }}</span
@@ -131,14 +131,7 @@ export default {
         "小程序",
         "其他",
       ],
-      serverEmployee: [
-        "20以下",
-        "20-50",
-        "50-100",
-        "100-150",
-        "150-200",
-        "200+",
-      ],
+      serverEmployee: ["全部", "100以下", "200", "300", "400", "500", "500+"],
       sort: [
         "综合评价优先",
         "需求指标评价优先",
@@ -157,22 +150,45 @@ export default {
         pageSize: 3,
       },
       allProject: [],
+      flag1: false,
+      num:0,
     };
   },
   created() {
     this.getList();
   },
   methods: {
-    selectType(indexType) {
+    async selectType(indexType) {
       this.inxType = indexType;
-      if(indexType==1){
-        this.$$axios.get("/api/company/select_studioType/1/3",params())
+      if (indexType == 0) {
+        this.getList();
+        return;
       }
+      const {
+        data: res,
+      } = await this.$axios.get("/api/company/select_studioType/1/3", {
+        params: { typeId: indexType },
+      });
+      this.allProject = res.data;
+      this.flag1 = true;
+      this.num=indexType;
     },
-    serverEmployeem(indexEmployee) {
+    async serverEmployeem(indexEmployee) {
       this.inxEmployee = indexEmployee;
+      if (indexEmployee == 0) {
+        this.getList();
+        return;
+      }
+      const {
+        data: res,
+      } = await this.$axios.get("/api/company/select_nums/1/3", {
+        params: { nums: indexEmployee * 100 },
+      });
+      this.allProject = res.data;
+      console.log(res);
+      this.flag2 = true;
     },
-    sortm( indexSort) {
+    sortm(indexSort) {
       this.inxSort = indexSort;
     },
     async getList() {
@@ -184,21 +200,50 @@ export default {
       console.log(this.allProject);
     },
     handleSizeChange(val) {
-      console.log(val)
+      console.log(val);
     },
     async handleCurrentChange(val) {
       if (val == 1) {
-        this.getList();
-        return;
+        if (this.flag1) {
+          const {
+            data: res,
+          } = await this.$axios.get("/api/company/select_studioType/1/3", {
+            params: { typeId: this.num },
+          });
+          this.allProject = res.data;
+          return;
+        } else {
+          this.getList();
+          return;
+        }
       } else if (val == 2) {
+        if (this.flag1) {
+          const {
+            data: res,
+          } = await this.$axios.get("/api/company/select_studioType/2/3", {
+            params: { typeId: this.num },
+          });
+          this.allProject = res.data;
+          return;
+        } else {
+          const { data: res } = await this.$axios.get(
+            "/api/company/select_studioAll/2/4"
+          );
+          this.allProject = res.data;
+          return;
+        }
+      } else {
+        if (this.flag1) {
+          const {
+            data: res,
+          } = await this.$axios.get("/api/company/select_studioType/3/3", {
+            params: { typeId: this.num },
+          });
+          this.allProject = res.data;
+          return;
+        }
         const { data: res } = await this.$axios.get(
-          "/api/company/select_studioAll/2/4"
-        );
-        this.allProject = res.data;
-        return;
-      }else{
-         const { data: res } = await this.$axios.get(
-          "/api/company/select_studioAll/3/1"
+          "/api/company/select_studioAll/3/4"
         );
         this.allProject = res.data;
         return;

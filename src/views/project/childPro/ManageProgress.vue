@@ -84,8 +84,12 @@ export default {
       currentPage2: 5,
       currentPage3: 5,
       currentPage4: 4,
-      dialogVisible:false
+      dialogVisible:false,
+      allList:[],
     };
+  },
+  created(){
+    this.getList();
   },
   methods: {
     handleSizeChange(val) {
@@ -109,6 +113,10 @@ export default {
           message:'aaa'
         }
       })
+    },
+    async getList(){
+     const {data:res}=await this.$axios.get("/api/company/underway_ByDemand_id/1/3",{params:{user_id:1011}})
+     console.log(res)
     },
     removeProgressProject($index){
       

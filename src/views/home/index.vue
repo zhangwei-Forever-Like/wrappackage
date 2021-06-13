@@ -6,7 +6,7 @@
       <!-- 头部导航栏 -->
     <el-header>
       <!-- 面包屑 -->
-      <Breadcrumb></Breadcrumb>
+      <Navbar></Navbar>
     </el-header>
     <!-- 主题数据部分 -->
     <el-main>
@@ -18,13 +18,15 @@
 
 <script>
 import Nav from './Nav.vue'
-import Breadcrumb from './Breadcrumb.vue'
+import Navbar from './Navbar.vue'
+
+
 
 export default {
   components: {
     Nav,
-    Breadcrumb
-  }
+    Navbar,
+  },
 }
 </script>
 
@@ -56,6 +58,7 @@ export default {
   body > .el-container {
     margin-bottom: 40px;
   };
+  
   .el-container:nth-child(5) .el-aside,
   .el-container:nth-child(6) .el-aside {
     line-height: 260px;
@@ -63,7 +66,7 @@ export default {
   .el-container:nth-child(7) .el-aside {
     line-height: 320px;
   };
-
+  
     el-header {
     background-color: #cf530c;
     color: #333;
@@ -84,15 +87,5 @@ export default {
     color: #333;
     
   }
-   .el-dropdown-link {
-    cursor: pointer;
-    color: #409EFF;
-    height: 100%;
-  }
-  .el-icon-arrow-down {
-    font-size: 12px;
-  }
-  .select{
-      float:right;
-  }
+   
 </style>
