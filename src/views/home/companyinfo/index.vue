@@ -63,24 +63,24 @@ export default {
           cancelButtonText: "取消",
           type: "warning",
         }
-      ).catch(err=>err)
-        if (confitResult !== "confirm") {
-          return this.$message.info("已取消修改");
-        }
-        const { data: res } = await this.$axios.post(
-          "/api/admin/update_company_status",
-          Qs.stringify({ username: username })
-        );
-        if(res.code!==200){
-         return this.$message.error('修改失败')
-        }
-        this.$message.success('修改成功')
-        this.getList()
-    }, 
+      ).catch((err) => err);
+      if (confitResult !== "confirm") {
+        return this.$message.info("已取消修改");
+      }
+      const { data: res } = await this.$axios.post(
+        "/api/admin/update_company_status",
+        Qs.stringify({ username: username })
+      );
+      if (res.code !== 200) {
+        return this.$message.error("修改失败");
+      }
+      this.$message.success("修改成功");
+      this.getList();
+    },
   },
 };
 </script>
 
 <style>
-</style>
 
+</style>
