@@ -2,7 +2,7 @@
   <div id="header">
     <router-link to="/"><div id="title">发源地</div></router-link>
     <div id="function">
-      <router-link to="/PersonalCenter"
+      <router-link to="/personalcenter"
         ><el-link :underline="false" icon="el-icon-user-solid"
           >个人中心</el-link
         ></router-link

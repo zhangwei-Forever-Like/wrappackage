@@ -6,13 +6,16 @@ Vue.use(Vuex)
 const store=new Vuex.Store({
     state:{
         Authorization:localStorage.getItem('Authorization') ? localStorage.getItem('Authorization') : '',
-        nums:0,
+        id:0,
     },
     mutations:{
         changeLogin (state, user) {
             state.Authorization = user.Authorization;
             localStorage.setItem('Authorization', user.Authorization);
           },
+        getId(state,id){
+            state.id=id
+        }
     }
 })
 

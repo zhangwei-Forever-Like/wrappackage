@@ -112,9 +112,7 @@
         </el-table>
         <el-pagination
           @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="tempStudio.pageNum"
-          :page-size="tempStudio.pageRow"
+          
           :total="totalCount"
           :page-sizes="[10, 20, 50, 100]"
           layout="total, sizes, prev, pager, next, jumper">
@@ -155,76 +153,28 @@ export default {
           update: '编辑',
           create: '新建用户'
         },
-        tempStudio: {
-          projectName:'',
-          deposit:'',
-          finalPayment:'',
-          companyName:'',
-          projectProgress:'',
-          studioName:'',
-          deleteStatus:'',
-          projectDescription:"",
-          pageNum: 1,//页码
-          pageRow: 50//每页条数
-        },
-        userIndex: {
-          id:"",
-          projectName:"",
-          studioName:"",
-          companyName:"",
-          applyDate:""
-        },
-        demandIndex:{
-          projectName:'',
-          id:'',
-          companyName:'',
-        }
+      
+ 
       }
     },
     created() {
-      this.tempStudio.studioName = this.$root.unitName;
       this.getList();
-      // if (this.hasPerm('user:add') || this.hasPerm('user:update')) {
-      //   this.getAllRoles();
-      // }
     },
-    // computed: {
-    //   ...mapGetters(['userId'])
-    // },
     methods: {
-      getList() {
+      async getList() {
         //查询列表
-        this.listLoading = true;
-        this.api({
-          url: "/studioProjectManagement/studioProgressList",
-          method: "get",
-          params: this.tempStudio
-        }).then(data => {
-          this.listLoading = false;
-          this.list = data.list;
-          this.totalCount = data.totalCount;
-        }).catch(() => {
-            this.$message.error("查询失败")
-          })
+        const {data:res}=await this.$axios.get("/api/studio/underway/1/5",{params:{user_id:11}})
+        console.log(res)
+      },
+      handleSizeChange(){
+
       },
       getProjectProgressLog($index) {
         this.showProgressLog = true;
-        this.tempStudio = this.list[$index];
-        this.tempStudio.companyName = this.$root.unitName;
-        this.api({
-          url: "/studioProjectManagement/getProjectProgressLog",
-          method: "post",
-          data: this.tempStudio
-        }).then(data => {
-          this.progressLogList = data.list;
-          this.logCount = data.count;
-          this.transformDate(this.progressLogList);
-        });
+       
       },
       transformDate(progressLogList) {
-        for (var i = 0; i < this.logCount; i++) {
-          this.time = new Date(this.progressLogList[i].updateDate);
-          this.progressLogList[i].updateDate = this.time.getFullYear() + "/" + (this.time.getMonth() + 1 < 10 ? "0" + (this.time.getMonth() + 1):this.time.getMonth()+1) + "/" + (this.time.getDate()-1) + "/ " + (this.time.getHours()+16) + ":" + this.time.getMinutes() + ":" + this.time.getSeconds();
+     
         }
       },
       handleClose(done) {
@@ -233,101 +183,29 @@ export default {
       },
       handleSizeChange(val) {
         //改变每页数量
-        this.tempStudio.pageRow = val
         this.handleFilter();
-      },
-      handleCurrentChange(val) {
-        //改变页码
-        this.tempStudio.pageNum = val
-        this.getList();
       },
       handleFilter() {
         //查询事件
-        this.tempStudio.pageNum = 1
-        this.getList()
       },
       getIndex($index) {
         //表格序号
-        return (this.tempStudio.pageNum - 1) * this.tempStudio.pageRow + $index + 1
       },
       showCreate() {
         //显示新增对话框
-        this.tempStudio.projectName = "";
-        this.tempStudio.deposit = "";
-        this.tempStudio.finalPayment = "";
-        this.tempStudio.companyName = "";
-        this.tempStudio.projectProgress = "",
-        this.dialogStatus = "create"
-        this.dialogFormVisible = true
       },
       showUpdate($index) {
-        let user = this.list[$index];
-        this.tempStudio.projectName = studioNotRecrutied.projectName;
-        this.tempStudio.deposit = studioNotRecrutied.deposit;
-        this.tempStudio.finalPayment = studioNotRecrutied.finalPayment;
-        this.tempStudio.companyName = studioNotRecrutied.companyName;
-        this.tempStudio.projectProgress = studioNotRecrutied.projectProgress;
-        this.tempStudio.deleteStatus ="1";
-        this.dialogStatus = "update"
-        this.dialogFormVisible = true
       },
-      // createUser() {
-      //   //添加新用户
-      //   this.api({
-      //     url: "/user/addUser",
-      //     method: "post",
-      //     data: this.tempUser
-      //   }).then(() => {
-      //     this.getList();
-      //     this.dialogFormVisible = false
-      //   })
-      // },
+
       modifyProgress(index){
         this.modify = true;
         this.index = index;
       },
       updateStudioProgress(index) {
         //修改进程
-        this.tempStudio = this.list[this.index];
-        this.tempStudio.projectProgress = this.msg;
-        let _vue = this;
-        this.api({
-          url: "/studioProjectManagement/updateStudioProgress",
-          method: "post",
-          data: this.tempStudio
-        }).then(() => {
-          this.modify = false;
-          _vue.updateLog(this.index);
-          this.$message({
-            type: 'success',
-            onClose: () => {
-              _vue.getList();
-            }
-          })
-        }).catch(() => {
-            this.$message.error("修改失败")
-          })
       },
       updateLog($index) {
         //修改总进程
-        this.tempStudio = this.list[$index];
-        this.tempStudio.projectProgress = this.msg;
-        let _vue = this;
-        this.api({
-          url: "/studioProjectManagement/addLog",
-          method: "post",
-          data: this.tempStudio
-        }).then(() => {
-          this.modify = false;
-          this.$message({
-            type: 'success',
-            onClose: () => {
-              _vue.getList();
-            }
-          })
-        }).catch(() => {
-            this.$message.error("修改失败")
-          })
       },
       apply(finalPayment, index) {
           this.finalPaymentOk = true;
@@ -335,86 +213,25 @@ export default {
           this.finalPaymentIndex = finalPayment;
       },
       applyForFinalPayment(){
-        this.userIndex = this.list[this.index];
-        this.api({
-          url: "/companyProjectManagement/applyForFinalPayment",
-          method: "post",
-          data: this.userIndex
-        }).then(() => {
-          this.$message.success("已为您发送申请");
-          this.finalPaymentOk = false;          
-        })
+     
       },
       goParam:function(msg){
         this.$router.push({
         path:'/companyMessage',
-        // name:'companyMessage',
-        // params:{
-        //   // companyName:this.tempStudio.companyName
-        //   companyName:'发猿地'
-        // }
+     
         query:{
-          // companyName:this.tempStudio.companyName
           companyName:msg
         }
         })
       },
       goParamDemand:function(projectName,companyName) {
-        this.demandIndex.projectName = projectName;
-        // this.demandIndex.companyName = this.$root.unitName;
-        this.demandIndex.companyName = companyName;
-        this.api({
-          url: "/classify/getDemandIdByProjectName",
-          method: "post",
-          data: this.demandIndex
-        }).then(data => {
-          this.demandIndex.id = data.json.id;
-          this.$router.push({
-          path: "/projectMessage",
-          query: {
-            projectName: "M000989",
-            projectId: this.demandIndex.id
-          }
-        });
-        })
+  
       },
       removeProject($index) {
-        this.tempStudio = this.list[$index];
-        // this.tempStudio.studioName = this.$root.unitName;
-        this.tempStudio.deleteStatus = 0;
-        //添加项目到进行中
-        this.api({
-        url: "/studioProjectManagement/updateStudioProgress",
-          method: "post",
-          data: this.tempStudio
-        }).then(() => {
-          this.getList();
-        }).catch(() => {
-            this.$message.error("删除失败")
-          })
+     
       },
-      // removeUser($index) {
-      //   let _vue = this;
-      //   this.$confirm('确定删除此用户?', '提示', {
-      //     confirmButtonText: '确定',
-      //     showCancelButton: false,
-      //     type: 'warning'
-      //   }).then(() => {
-      //     let user = _vue.list[$index];
-      //     user.deleteStatus = '2';
-      //     _vue.api({
-      //       url: "/user/updateUser",
-      //       method: "post",
-      //       data: user
-      //     }).then(() => {
-      //       _vue.getList()
-      //     }).catch(() => {
-      //       _vue.$message.error("删除失败")
-      //     })
-      //   })
-      // },
-    },
-    // components:{SNavBar},
+     
+    
   }
   
   

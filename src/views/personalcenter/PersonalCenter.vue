@@ -14,7 +14,7 @@
       <About />
       <div class="s-header">
         <div class="h-nav">
-          <a href="#personcenter">个人资料</a>
+          <router-link to="/personalcenter">个人资料</router-link>
           <router-link to="/myWallet">我的钱包</router-link>
         </div>
       </div>
@@ -27,9 +27,9 @@
             <h3 class="title">基本资料</h3>
             <ul>
               <li>
-                <p>姓名：</p>
+                <p>工作室名称：</p>
                 <div class="edit-box">
-                  <span></span>
+                  <span>{{ tableData.username }}</span>
                 </div>
                 <!-- <template slot-scope="scope"> -->
                 <el-button
@@ -48,15 +48,31 @@
                     label-position="left"
                     label-width="80px"
                     style="width: 300px; margin-left: 50px"
+                    :model="updateOne"
                   >
-                    <el-form-item prop="username" label="姓名">
-                      <el-input type="text"></el-input>
+                    <el-form-item prop="description" v-show="isShow">
+                      <el-input
+                        type="text"
+                        :v-model="updateOne.id = tableData.id"
+                      ></el-input>
                     </el-form-item>
-                    <el-form-item prop="unitName" label="工作室">
-                      <el-input type="text"></el-input>
+                    <el-form-item prop="username" label="工作室名称">
+                      <el-input
+                        type="text"
+                        v-model="updateOne.unit_name"
+                      ></el-input>
                     </el-form-item>
-                    <el-form-item prop="description" label="关于我们">
-                      <el-input type="text"></el-input>
+                    <el-form-item prop="unitName" label="工作室描述">
+                      <el-input
+                        type="text"
+                        v-model="updateOne.description"
+                      ></el-input>
+                    </el-form-item>
+                    <el-form-item prop="description" v-show="isShow">
+                      <el-input
+                        type="text"
+                        :v-model="updateOne.type_id = tableData.typeId"
+                      ></el-input>
                     </el-form-item>
                   </el-form>
                   <div slot="footer" class="dialog-footer">
@@ -70,15 +86,15 @@
                 </el-dialog>
               </li>
               <li>
-                <p>工作室：</p>
+                <p>工作室描述：</p>
                 <div class="edit-box">
-                  <span></span>
+                  <span>{{ tableData.description }}</span>
                 </div>
               </li>
               <li>
-                <p>关于我们：</p>
+                <p>擅长项目类型：</p>
                 <div class="edit-box">
-                  <span></span>
+                  <span>{{ tableData.typeId }}</span>
                 </div>
               </li>
             </ul>
@@ -89,7 +105,7 @@
               <li>
                 <p>账号：</p>
                 <div class="edit-box">
-                  <span></span>
+                  <span>{{ tableData.username }}</span>
                 </div>
                 <el-button type="button" icon="edit" @click="showUpdateAccount"
                   >修改</el-button
@@ -98,7 +114,7 @@
               <li>
                 <p>邮箱：</p>
                 <div class="edit-box">
-                  <span></span>
+                  <span>{{ tableData.email }}</span>
                 </div>
                 <el-dialog
                   :title="textMap[dialogStatus]"
@@ -135,13 +151,7 @@
               <li>
                 <p>手机：</p>
                 <div class="edit-box">
-                  <span></span>
-                </div>
-              </li>
-              <li>
-                <p>所在城市：</p>
-                <div class="edit-box">
-                  <span></span>
+                  <span>{{ tableData.phone }}</span>
                 </div>
               </li>
             </ul>
@@ -152,7 +162,7 @@
               <li>
                 <p>密码：</p>
                 <div class="edit-box">
-                  <span>***********</span>
+                  <span>{{ tableData.password }}</span>
                 </div>
                 <el-button type="button" icon="edit" @click="showUpdatePwd"
                   >修改</el-button
@@ -197,6 +207,7 @@
 </template>
 
 <script>
+import Qs from "qs";
 import About from "../workroom/About.vue";
 import SNavBar from "../../components/NavBar/studio.vue";
 
@@ -214,10 +225,43 @@ export default {
 
       // dialogImageUrl: "",
       dialogVisible: false,
+      studioid: 2,
+      username: "mst",
+      tableData: {}, //个人的资料
+      isShow: false,
+      updateOne: {
+        //基本信息修改
+        id: "",
+        unit_name: "",
+        description: "",
+        type_id: "",
+      },
+      updateTwo: {
+        //账号管理修改
+        id: "",
+        email: "",
+        phone: "",
+        password: "",
+      },
     };
   },
-  created: function () {},
+  created() {
+    this.getList();
+    // this.getList2();
+  },
   methods: {
+    async getList() {
+      const { data: res } = await this.$axios.get("/api/studio/select_one", {
+        params: { username: this.username },
+      });
+      console.log(res);
+      this.tableData = res.data[0];
+      this.$store.commit('getId',this.tableData.id)
+    },
+    async updateUser() {
+      const {data:res}=await this.$axios.post("/api/studio/update_one",Qs.stringify(this.updateOne))
+      this.getList();
+    },
     showUpdateBasicInfo() {
       this.dialogFormVisible1 = true;
     },

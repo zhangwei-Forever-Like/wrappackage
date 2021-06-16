@@ -1,7 +1,7 @@
 <template>
   <div id="about">
     <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="dialogImageUrl" alt="" />
+      <!-- <img width="100%"  alt="" /> -->
     </el-dialog>
     <el-upload
       class="avatar-uploader"
@@ -18,7 +18,7 @@
           alt="张智涵"
       /></i>
     </el-upload>
-    <h1 class="uc-name">username：{{ this.$root.username }}</h1>
+    <h1 class="uc-name">username：</h1>
   </div>
 </template>
 
@@ -28,11 +28,11 @@ export default {
     return {
       imageUrl: "",
       avatarUrl: "http://127.0.0.1:8080/avatar.jpg", //默认头像
+      dialogVisible:false
     };
   },
   created: function () {
-    this.user.username = this.$root.username;
-    this.getUserInfo();
+    // this.getUserInfo();
   },
   methods: {
     handleAvatarSuccess(res, file) {

@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 import Two from '../views/workroom/Two.vue'
-import MyWallet from '../views/workroom/myWallet.vue'
 import StudioInfo from '../views/workroom/StudioInfo.vue'
 import ManageProject from '../views/workroom/ManageProject.vue'
 import StudioManageProgress from '../views/projectManagement/studioManageProgress.vue'
@@ -131,7 +130,7 @@ const routes = [
       {
         path: "/myWallet",
         name: 'MyWallet',
-        component: MyWallet
+        component: ()=>import('../views/workroom/myWallet.vue')
       },
       {
         path: "/ManageProject",

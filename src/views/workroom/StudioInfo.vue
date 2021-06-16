@@ -201,21 +201,6 @@ export default {
     selectType(itemType, idxType) {
       this.indexType = idxType;
       this.selectedItems.projectType = itemType;
-      this.api({
-        url: "/classify/filterDemand",
-        method: "post",
-        data: this.selectedItems
-      }).then(data => {
-        this.totalCount = data.totalCount
-        this.demandList = data.list;
-        for (var index = 0; index < this.demandList.length; index++) {
-          if (this.demandList[index].tenderStatus == 1) {
-            this.demandList[index].tenderStatus = "招募中";
-          } else {
-            this.demandList[index].tenderStatus = "已结束";
-          }
-        }
-      });
     },
     selectStatus(itemSchedule, idxSchedule) {
       this.indexSchedule = idxSchedule;
@@ -226,57 +211,14 @@ export default {
       } else {
         this.selectedItems.tenderStatus = "全部";
       }
-      this.api({
-        url: "/classify/filterDemand",
-        method: "post",
-        data: this.selectedItems
-      }).then(data => {
-        this.totalCount = data.totalCount
-        this.demandList = data.list;
-        for (var index = 0; index < this.demandList.length; index++) {
-          if (this.demandList[index].tenderStatus == 1) {
-            this.demandList[index].tenderStatus = "招募中";
-          } else if (this.demandList[index].tenderStatus == 2) {
-            this.demandList[index].tenderStatus = "已结束";
-          }
-        }
-      });
     },
     selectRole(itemRole, idxRole) {
       this.indexRole = idxRole;
       this.selectedItems.recruitmentRole = itemRole;
-      this.api({
-        url: "/classify/filterDemand",
-        method: "post",
-        data: this.selectedItems
-      }).then(data => {
-        this.totalCount = data.totalCount
-        this.demandList = data.list;
-        for (var index = 0; index < this.demandList.length; index++) {
-          if (this.demandList[index].tenderStatus == 1) {
-            this.demandList[index].tenderStatus = "招募中";
-          } else if (this.demandList[index].tenderStatus == 2) {
-            this.demandList[index].tenderStatus = "已结束";
-          }
-        }
-      });
     },
-    getAllDemand() {
-      this.api({
-        url: "/classify/getAllDemand",
-        method: "post",
-        data: this.selectedItems
-      }).then(data => {
-        this.demandList = data.list;
-        this.totalCount = data.totalCount
-        for (var index = 0; index < this.demandList.length; index++) {
-          if (this.demandList[index].tenderStatus == "1") {
-            this.demandList[index].tenderStatus = "招募中";
-          } else if (this.demandList[index].tenderStatus == "2") {
-            this.demandList[index].tenderStatus = "已结束";
-          }
-        }
-      });
+    async getAllDemand() {
+      const {data:res}=await this.$axios.get("/api/studio/demand/select_type/1/5/2")
+      console.log(res)
     },
     studioInfo(id) {
       this.$router.push({

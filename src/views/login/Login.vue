@@ -389,8 +389,8 @@ export default {
     return {
       // 这是登录表单的数据绑定对象
       loginForm: {
-        username: "wac",
-        password: "242866",
+        username: "mst",
+        password: "123456",
         pwdType: "password",
       },
       isShow: false,
@@ -554,7 +554,7 @@ export default {
           },
         ]
       },
-      radio: "1",
+      radio: "2",
     };
   },
   methods: {

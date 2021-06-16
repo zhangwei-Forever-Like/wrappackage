@@ -17,7 +17,6 @@
       </div>
     </div>
     <div class="uc-layer-top self">
-      <!-- <About /> -->
       <about></about>
       <div class="s-header">
         <div class="h-nav">
@@ -31,9 +30,6 @@
          <!-- :data="list" v-loading.body="listLoading" element-loading-text="拼命加载中"  -->
         <el-table border fit  highlight-current-row>
         <el-table-column align="center" label="序号" width="80">
-          <template slot-scope="scope">
-            <span v-text="getIndex(scope.$index)"></span>
-          </template>
         </el-table-column>
         <el-table-column align="center" label="项目名称" prop="projectName" style="width: 60px;"></el-table-column>
         <el-table-column align="center" label="定金" prop="deposit" style="width: 60px;"></el-table-column>
@@ -49,10 +45,6 @@
         <!-- <el-table-column align="center" label="企业信息" prop="unit_name" style="width: 60px;"></el-table-column> -->
         <!-- router-link记得传参 -->
         <el-table-column align="center" label="企业信息" style="width: 60px;">
-          <template slot-scope="scope">
-            <!-- <router-link to="/companyMessage">{{ scope.row.companyName }}</router-link> -->
-            <a href="javascript:void(0);" @click="goParam(scope.row.companyName)">{{ scope.row.companyName }}</a>
-          </template>
         </el-table-column>
         <!-- <el-table-column align="center" label="企业信息" width="170">
           <template slot-scope="scope">
@@ -77,8 +69,6 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="tempStudio.pageNum"
-        :page-size="tempStudio.pageRow"
         :total="totalCount"
         :page-sizes="[10, 20, 50, 100]"
         layout="total, sizes, prev, pager, next, jumper"
@@ -88,6 +78,7 @@
 </template>
 
 <script>
+import Qs from 'qs'
 import About from './About.vue';
 import SNavBar from '../../components/NavBar/studio';
 
@@ -101,10 +92,6 @@ export default {
       totalCount: 0, //分页组件--数据总条数
       list: [], //表格的数据
       listLoading: false, //数据加载等待动画
-      // listQuery: {
-      //   pageNum: 1, //页码
-      //   pageRow: 50 //每页条数
-      // },
       roles: [], //角色列表
       dialogStatus: "create",
       dialogFormVisible: false,
@@ -112,113 +99,43 @@ export default {
         update: "编辑",
         create: "新建用户"
       },
-      tempStudio: {
-        id:'',
-        projectName:"",
-        deposit:"",
-        finalPayment:"",
-        companyName:"",
-        studioName:"",
-        bidStatus:"",
-        deleteStatus:"",
-        pageNum: 1, //页码
-        pageRow: 50,//每页条数
-        projectDescription:""
-      },
-      demandIndex:{
-          projectName:'',
-          id:'',
-          companyName:'',
-        }
+      id:3
     };
   },
   created() {
-    this.tempStudio.studioName = this.$root.unitName;
     this.getList();
-    // this.getStudioProjectInfo();
-    // if (this.hasPerm("user:add") || this.hasPerm("user:update")) {
-    //   this.getAllRoles();
-    // }
   },
-//   computed: {
-//     ...mapGetters(["userId"])
-//   },
+
   methods: {
-    // getAllRoles() {
-    //   this.api({
-    //     url: "/user/getAllRoles",
-    //     method: "get"
-    //   }).then(data => {
-    //     this.roles = data.list;
-    //   });
-    // },
-    getList() {
+    async getList() {
       //查询列表
-      this.listLoading = true;
-      this.api({
-        url: "/studioProjectManagement/studioNotRecruitedList",
-        method: "get",
-        params: this.tempStudio
-      }).then(data => {
-        this.listLoading = false;
-        this.list = data.list;
-        this.totalCount = data.totalCount;
-      }).catch(() => {
-            this.$message.error("查询失败")
-          })
+      // this.listLoading = true;
+      const {data:res}=await this.$axios.get("/api/studio/select_ByuUerId/1/5",{params:{user_id:this.id}})
+      console.log(res)
     },
     
     handleSizeChange(val) {
       //改变每页数量
-      this.tempStudio.pageRow = val;
-      this.handleFilter();
     },
     handleCurrentChange(val) {
       //改变页码
-      this.tempStudio.pageNum = val;
-      this.getList();
-      this.getStudioProjectInfo();
+    
     },
     handleFilter() {
       //查询事件
-      this.tempStudio.pageNum = 1;
-      this.getList();
-      this.getStudioProjectInfo();
+   
     },
     getIndex($index) {
       //表格序号
-      return (this.tempStudio.pageNum - 1) * this.tempStudio.pageRow + $index + 1;
+  
     },
     showCreate() {
       //显示新增对话框
-      this.tempStudio.projectName = "";
-      this.tempStudio.deposit = "";
-      this.tempStudio.finalPayment = "";
-      this.tempStudio.companyName = "";
-      this.tempStudio.studioName ="";
-      this.dialogStatus = "create";
-      this.dialogFormVisible = true;
+   
     },
     showUpdate($index) {
-      let studio = this.list[$index];
-      this.tempStudio.projectName = studioNotRecrutied.projectName;
-      this.tempStudio.deposit = studioNotRecrutied.deposit;
-      this.tempStudio.finalPayment = studioNotRecrutied.finalPayment;
-      this.tempStudio.companyName = studioNotRecrutied.companyName;
-      this.tempStudio.studioName = studioNotRecrutied.studioName;
-      this.tempStudio.bidStatus = "1";
-      this.tempStudio.deleteStatus ="1";
-      this.dialogStatus = "update";
-      this.dialogFormVisible = true;
+  
     },
-    goParam:function(msg){
-        this.$router.push({
-        path:'/companyMessage',
-        query:{
-          companyName:msg
-        }
-        })
-      },
       goToParam(msg) {
       this.$router.push({
         path: "/projectMessage",
@@ -229,38 +146,11 @@ export default {
       });
     },
     goParamDemand:function(projectName,companyName) {
-        this.demandIndex.projectName = projectName;
-        this.demandIndex.companyName = companyName;
-        this.api({
-          url: "/classify/getDemandIdByProjectName",
-          method: "post",
-          data: this.demandIndex
-        }).then(data => {
-          this.demandIndex.id = data.json.id;
-          this.$router.push({
-          path: "/projectMessage",
-          query: {
-            projectName: "M000989",
-            projectId: this.demandIndex.id
-          }
-        });
-        })
+       
       },
     removeProject($index) {
-        this.tempStudio = this.list[$index];
-        // this.tempStudio.studioName = this.$root.unitName;
-        this.tempStudio.deleteStatus = 0;
-        //添加项目到进行中
-        this.api({
-        url: "/studioProjectManagement/updateNotRecruitedProject",
-          method: "post",
-          data: this.tempStudio
-        }).then(() => {
-          this.getList();
-        }).catch(() => {
-            this.$message.error("删除失败")
-          })
-      }
+
+    }
   }
 };
 </script>
