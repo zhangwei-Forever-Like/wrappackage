@@ -1,39 +1,48 @@
 <template>
-  <el-table :data="tableData" border style="width: 100%" class="biao">
-    <el-table-column type="index" label="序号" width="120"> </el-table-column>
-    <el-table-column prop="username" label="账号" width="200">
-    </el-table-column>
-    <el-table-column prop="email" label="邮箱" width="250"> </el-table-column>
-    <el-table-column prop="phone" label="联系电话" width="250">
-    </el-table-column>
-    <el-table-column prop="unitName" label="单位名称" width="220">
-    </el-table-column>
-    <el-table-column label="审核状态" width="200">
-      <template slot-scope="scope">
-        <el-button
-          v-if="scope.row.auditStatus == 0"
-          type="success"
-          round
-          @click="open(scope.row.username)"
-          >审核通过</el-button
-        >
-        <el-button
-          v-else-if="scope.row.auditStatus == 1"
-          type="warning"
-          round
-          @click="open(scope.row.username)"
-          >未审核</el-button
-        >
-        <el-button
-          v-else-if="scope.row.auditStatus == 2"
-          type="info"
-          round
-          @click="open(scope.row.username)"
-          >审核中</el-button
-        >
-      </template>
-    </el-table-column>
-  </el-table>
+  <div class="myApp-container">
+    <el-table :data="tableData" class="biao" border style="width: 100%">
+      <el-table-column type="index" label="序号" width="100" align="center">
+      </el-table-column>
+      <el-table-column prop="username" label="账号" width="200" align="center">
+      </el-table-column>
+      <el-table-column prop="email" label="邮箱" width="200" align="center">
+      </el-table-column>
+      <el-table-column prop="phone" label="联系电话" width="200" align="center">
+      </el-table-column>
+      <el-table-column
+        prop="unitName"
+        label="单位名称"
+        width="200"
+        align="center"
+      >
+      </el-table-column>
+      <el-table-column label="审核状态" width="1500" align="center">
+        <template slot-scope="scope">
+          <el-button
+            v-if="scope.row.auditStatus == 0"
+            type="success"
+            round
+            @click="open(scope.row.username)"
+            >审核通过</el-button
+          >
+          <el-button
+            v-else-if="scope.row.auditStatus == 1"
+            type="warning"
+            round
+            @click="open(scope.row.username)"
+            >未审核</el-button
+          >
+          <el-button
+            v-else-if="scope.row.auditStatus == 2"
+            type="info"
+            round
+            @click="open(scope.row.username)"
+            >审核中</el-button
+          >
+        </template>
+      </el-table-column>
+    </el-table>
+  </div>
 </template>
 
 <script>
@@ -82,5 +91,25 @@ export default {
 </script>
 
 <style>
-
+/* .el-table,
+.el-table--fit,
+.el-table--enable-row-hover,
+.el-table--enable-row-transition {
+  width: 600px;
+  margin-left: 50px;
+} */
+table,
+tbody,
+thead {
+  width: 100% !important;
+}
+colgroup {
+  position: absolute;
+  width: 100% !important;
+  display: flex;
+}
+col {
+  flex: 1;
+  text-align: center;
+}
 </style>

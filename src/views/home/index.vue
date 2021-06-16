@@ -76,13 +76,16 @@ el-header {
 .el-aside {
   background-color: rgb(84, 92, 100);
   color: #333;
-  height: 100vh;
   flex-shrink: 1;
   margin-left: 0;
 }
 
 .el-main {
-  background-color: #d5dfeb;
+  /* background-color: #d5dfeb; */
+  background-color: white;
   color: #333;
+}
+.el-container {
+  height: 100vh;
 }
 </style>

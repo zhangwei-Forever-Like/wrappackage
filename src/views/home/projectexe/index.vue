@@ -26,19 +26,35 @@
       </el-row>
     </div>
     <el-table :data="tableData" border style="width: 100%">
-      <el-table-column type="index" label="序号" width="100"> </el-table-column>
-      <el-table-column prop="title" label="项目名称" width="250">
+      <el-table-column type="index" label="序号" width="100" align="center">
       </el-table-column>
-      <el-table-column label="项目进度" width="180">
+      <el-table-column prop="title" label="项目名称" width="250" align="center">
+      </el-table-column>
+      <el-table-column label="项目进度" width="150" align="center">
         <template slot-scope="scope">
           {{ scope.row.percentage * 100 }}%
         </template>
       </el-table-column>
-      <el-table-column prop="create_time" label="日期" width="250">
+      <el-table-column
+        prop="create_time"
+        label="日期"
+        width="250"
+        align="center"
+      >
       </el-table-column>
-      <el-table-column prop="company_name" label="公司名称" width="220">
+      <el-table-column
+        prop="company_name"
+        label="公司名称"
+        width="270"
+        align="center"
+      >
       </el-table-column>
-      <el-table-column prop="studio_name" label="工作室名称" width="220">
+      <el-table-column
+        prop="studio_name"
+        label="工作室名称"
+        width="270"
+        align="center"
+      >
       </el-table-column>
     </el-table>
   </div>
@@ -51,7 +67,7 @@ export default {
     return {
       tableData: [],
       content: "",
-      flag:true,
+      flag: true,
     };
   },
   created() {
@@ -76,22 +92,22 @@ export default {
       } else if (res.data.length == 0) {
         const { data: res } = await this.$axios.post(
           "/api/admin/implementation_by_company/1/8",
-           Qs.stringify({name:content})
+          Qs.stringify({ name: content })
         );
-        console.log(res)
-       this.tableData = res.data;
-       if(res.data.length !== 0){
-         return
-       }
+        console.log(res);
+        this.tableData = res.data;
+        if (res.data.length !== 0) {
+          return;
+        }
         // console.log(res)
-      } 
-      if(res.data.length == 0) {
+      }
+      if (res.data.length == 0) {
         const { data: res } = await this.$axios.post(
           "/api/admin/implementation_by_studio/1/8",
           Qs.stringify({ name: content })
         );
         this.tableData = res.data;
-        console.log(res)
+        console.log(res);
       }
     },
     reset() {
@@ -113,5 +129,12 @@ export default {
 }
 .buttonn {
   margin-left: 30px;
+}
+.el-table,
+.el-table--fit,
+.el-table--enable-row-hover,
+.el-table--enable-row-transition {
+  width: 600px;
+  margin-left: 50px;
 }
 </style>
