@@ -1,7 +1,7 @@
 <template>
   <div id="info">
     <Nav />
-        <div class="padding-leftandright gray-bgcolor">
+    <div class="padding-leftandright gray-bgcolor">
       <div class="filter-container">
         <el-form>
           <el-form-item>
@@ -15,11 +15,13 @@
                         <div>
                           <li
                             class="liMenu"
-                            :class="idxType==indexType?'type':''"
-                            @click="selectType(itemType,idxType)"
-                            v-for="(itemType,idxType) in type"
+                            :class="idxType == indexType ? 'type' : ''"
+                            @click="selectType(itemType, idxType)"
+                            v-for="(itemType, idxType) in type"
                             :key="idxType"
-                          >{{itemType}}</li>
+                          >
+                            {{ itemType }}
+                          </li>
                         </div>
                       </div>
                     </div>
@@ -61,60 +63,61 @@
                 fit
                 highlight-current-row
               >
-                <el-col :span="24" v-for="o in demandList" :key="o" >
+                <el-col :span="24" v-for="o in demandList" :key="o">
                   <el-card :body-style="{ padding: '5px' }">
                     <div class="icon-content-3GTl0">
-                        <p v-if="o.projectType=='Web网站'">
-                          <img class="img-background" :src="web">
-                        </p>
-                        <p v-if="o.projectType=='APP开发'">
-                          <img class="img-background" :src="APP">
-                        </p>
-                        <p v-if="o.projectType=='微信公众号'">
-                          <img class="img-background" :src="weixin">
-                        </p>
-                        <p v-if="o.projectType=='HTML5应用'">
-                          <img class="img-background" :src="html5">
-                        </p>
-                        <p v-if="o.projectType=='小程序'">
-                          <img class="img-background" :src="small">
-                        </p>
-                        <p v-if="o.projectType=='其他'">
-                          <img class="img-background" :src="other">
-                        </p>
-                        <a @click="studioInfo(o.id)">
-                        </a>
+                      <p v-if="o.projectType == 'Web网站'">
+                        <img class="img-background" :src="web" />
+                      </p>
+                      <p v-if="o.projectType == 'APP开发'">
+                        <img class="img-background" :src="APP" />
+                      </p>
+                      <p v-if="o.projectType == '微信公众号'">
+                        <img class="img-background" :src="weixin" />
+                      </p>
+                      <p v-if="o.projectType == 'HTML5应用'">
+                        <img class="img-background" :src="html5" />
+                      </p>
+                      <p v-if="o.projectType == '小程序'">
+                        <img class="img-background" :src="small" />
+                      </p>
+                      <p v-if="o.projectType == '其他'">
+                        <img class="img-background" :src="other" />
+                      </p>
+                      <a @click="studioInfo(o.id)"> </a>
                     </div>
                     <div class="body-content-2y6ks">
                       <div class="info-body-34ARl">
                         <div class="title-2q5sH">
                           <a @click="studioInfo(o.id)" class="name-UUeBS">
                             <span class="no-3TiXA">NO.</span>
-                            <span class="no-3TiXA">{{o.id}}</span>
+                            <span class="no-3TiXA">{{ o.id }}</span>
                             <span class="name-UUeBS">
-                              <span class>{{o.projectName}}</span>
+                              <span class>{{ o.projectName }}</span>
                             </span>
-                            <span class="status-3kUbT recruiting">{{o.tenderStatus}}</span>
+                            <span class="status-3kUbT recruiting">{{
+                              o.tenderStatus
+                            }}</span>
                           </a>
                           <span class="price-2qRFd">
                             <span class="bargain-1QpRQ"></span>
                             <span class="money-LMlJK">
-                              <span>&yen;{{o.projectBudget}}</span>
+                              <span>&yen;{{ o.projectBudget }}</span>
                             </span>
                           </span>
                         </div>
                         <div>
                           <div class="label-2n6KW">
                             <label>招募：</label>
-                            <span>{{o.recruitmentRole}}</span>
+                            <span>{{ o.recruitmentRole }}</span>
                           </div>
                           <div class="label-2n6KW">
                             <label>类型：</label>
-                            <span>{{o.projectType}}</span>
+                            <span>{{ o.projectType }}</span>
                           </div>
                           <div class="label-2n6KW">
                             <label>周期(天)：</label>
-                            <span>{{o.projectCycle}}</span>
+                            <span>{{ o.projectCycle }}</span>
                           </div>
                         </div>
                         <div class="time-2b2Sj">
@@ -144,58 +147,35 @@
 </template>
 
 <script>
-
 import Nav from "../../components/NavBar/studio";
 export default {
   components: { Nav },
   data() {
     return {
-      pageNum:1,
-      pageRow:50,
-      listLoading: false, 
-      totalCount:0,
-      type: [
-        "全部",
-        "Web网站",
-        "APP开发",
-        "微信公众号",
-        "HTML5应用",
-        "小程序",
-        "其他"
-      ],
+      pageNum: 1,
+      pageRow: 50,
+      listLoading: false,
+      totalCount: 0,
+      type: ["全部", "Web网站", "APP开发", "微信公众号", "其他"],
       schedule: ["全部", "招标中", "已结束"],
       demandList: [],
-      role: [
-        "全部",
-        "项目经理",
-        "产品经理",
-        "设计师",
-        "Android开发",
-        "iOS开发",
-        "前端开发",
-        "后端开发",
-        "全栈开发",
-        "应用开发",
-        "开发团队",
-        "测试工程师"
-      ],
       selectedItems: {
         projectType: "全部",
         tenderStatus: "全部",
-        recruitmentRole: "全部"
+        recruitmentRole: "全部",
       },
       indexType: 0,
       indexSchedule: 0,
-      indexRole: 0
+      indexRole: 0,
     };
   },
-  created: function() {
+  created: function () {
     this.getAllDemand();
   },
   computed: {
     message() {
       return "页面找不到了......";
-    }
+    },
   },
   methods: {
     selectType(itemType, idxType) {
@@ -217,16 +197,16 @@ export default {
       this.selectedItems.recruitmentRole = itemRole;
     },
     async getAllDemand() {
-      const {data:res}=await this.$axios.get("/api/studio/demand/select_type/1/5/2")
-      console.log(res)
+      const { data: res } = await this.$axios.get("/api/studio/demand/1/5");
+      console.log(res);
     },
     studioInfo(id) {
       this.$router.push({
         path: "/projectMessage",
         query: {
           projectName: "M000989",
-          projectId: id
-        }
+          projectId: id,
+        },
       });
     },
     handleSizeChange(val) {
@@ -252,12 +232,11 @@ export default {
         1
       );
     },
-  }
+  },
 };
 </script>
 
 <style scoped>
-
 .project-filter-container {
   background: #fff;
   box-shadow: 0 1px 2px 0 rgba(31, 45, 61, 0.1);
@@ -473,5 +452,4 @@ a {
 .padding-top20 {
   padding-top: 20px;
 }
-
 </style>

@@ -28,30 +28,26 @@
     </div>
     <div class="app-container">
          <!-- :data="list" v-loading.body="listLoading" element-loading-text="拼命加载中"  -->
-        <el-table border fit  highlight-current-row>
-        <el-table-column align="center" label="序号" width="80">
+        <el-table border fit  highlight-current-row :data="tableData">
+        <el-table-column align="center" label="序号" width="80" type="index">
         </el-table-column>
-        <el-table-column align="center" label="项目名称" prop="projectName" style="width: 60px;"></el-table-column>
-        <el-table-column align="center" label="定金" prop="deposit" style="width: 60px;"></el-table-column>
-        <el-table-column align="center" label="尾款" prop="finalPayment" style="width: 60px;"></el-table-column>
-        <el-table-column align="center" label="工作室名字" prop="studioName" style="width: 60px;"></el-table-column>
-        <el-table-column align="center" label="投标情况" prop="bidStatus" width="170">
+        <el-table-column align="center" label="项目名称" prop="project_title" style="width: 60px;"></el-table-column>
+        <el-table-column align="center" label="定金" prop="price" style="width: 60px;"></el-table-column>
+        <el-table-column align="center" label="尾款" prop="earnest" style="width: 60px;"></el-table-column>
+        <el-table-column align="center" label="工作室名字" prop="unit_name" style="width: 60px;"></el-table-column>
+        <el-table-column align="center" label="投标情况" prop="bidding_state" width="170">
             <template slot-scope="scope">
-              <span v-if="scope.row.bidStatus==1">投标失败</span>
-              <span v-if="scope.row.bidStatus==2">投标中</span>
-              <span v-if="scope.row.bidStatus==3">投标完成</span>
+              <span v-if="scope.row.bidding_state==1">投标失败</span>
+              <span v-if="scope.row.bidding_state==2">投标中</span>
+              <span v-if="scope.row.bidding_state==3">投标完成</span>
             </template>
           </el-table-column>
-        <!-- <el-table-column align="center" label="企业信息" prop="unit_name" style="width: 60px;"></el-table-column> -->
-        <!-- router-link记得传参 -->
-        <el-table-column align="center" label="企业信息" style="width: 60px;">
-        </el-table-column>
-        <!-- <el-table-column align="center" label="企业信息" width="170">
+        <el-table-column align="center" label="企业信息" prop="com_unit_name" style="width: 60px;">
           <template slot-scope="scope">
-            <router-link to="/companyMessage">招标企业</router-link>
+            <el-button type="text">{{scope.row.com_unit_name}}</el-button>
           </template>
-        </el-table-column> -->
-        <el-table-column align="center" label="招募进度" width="170">
+        </el-table-column>
+        <el-table-column align="center" label="项目进度" width="170">
           <template slot-scope="scope">
             <!-- <router-link to="/projectMessage"> -->
               <el-button type="primary"  @click="goParamDemand(scope.row.projectName,scope.row.companyName)" plain>查看</el-button>
@@ -61,7 +57,7 @@
         <el-table-column align="center" label="管理" width="220" >
             <template slot-scope="scope">
               <el-button type="danger" icon="delete"
-                        @click="removeProject(scope.$index)">删除
+                        @click="removeProject(scope.row.user_id,scope.row.demandId)">删除
               </el-button>
             </template>
         </el-table-column>
@@ -99,7 +95,8 @@ export default {
         update: "编辑",
         create: "新建用户"
       },
-      id:3
+      id:3,
+      tableData:[]
     };
   },
   created() {
@@ -110,10 +107,14 @@ export default {
     async getList() {
       //查询列表
       // this.listLoading = true;
-      const {data:res}=await this.$axios.get("/api/studio/select_ByuUerId/1/5",{params:{user_id:this.id}})
+      const {data:res}=await this.$axios.get("/api/studio/select_ByuUerId/1/5",{params:{id:this.id}})
+      this.tableData=res.data
       console.log(res)
     },
-    
+     async removeProject(id,demandId) {
+       const {data:res}=await this.$axios.get("/api/studio/abandon",{params:{id:id,demand_id:demandId}})
+      this.getList();
+    },
     handleSizeChange(val) {
       //改变每页数量
     },
@@ -148,9 +149,6 @@ export default {
     goParamDemand:function(projectName,companyName) {
        
       },
-    removeProject($index) {
-
-    }
   }
 };
 </script>

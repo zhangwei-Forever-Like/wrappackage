@@ -112,8 +112,8 @@ export default {
  
       async getList() {
         //查询列表
-      //  const {data:res}=await this.$axios.get("/api/studio/complete/1/5",{params:{studio_id:this.studio_id}})
-      //  console.log(res)
+       const {data:res}=await this.$axios.get("/api/studio/complete/1/5",{params:{studio_id:this.studio_id}})
+       console.log(res)
       },
       handleSizeChange(val) {
         //改变每页数量

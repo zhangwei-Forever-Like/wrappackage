@@ -70,7 +70,7 @@ export default {
       const { data: res } = await this.$axios.get(
         "/api/admin//project_schedule/1/8"
       );
-      // console.log(res);
+      console.log(res);
       this.tableData = res.data;
     },
     async submitForm(content) {
